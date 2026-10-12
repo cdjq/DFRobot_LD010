@@ -1,0 +1,41 @@
+#######################################
+# Syntax Coloring DFRobot_LD010
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+DFRobot_LD010	KEYWORD1
+eBaudRate_t	KEYWORD1
+eUploadMode_t	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+setDeviceAddress	KEYWORD2
+getDeviceAddress	KEYWORD2
+setBaudRate	KEYWORD2
+getBaudRate	KEYWORD2
+setLiquidAlarm	KEYWORD2
+getLiquidAlarm	KEYWORD2
+setInstallationHeight	KEYWORD2
+getInstallationHeight	KEYWORD2
+calibrateEmptyDistance	KEYWORD2
+getEmptyHeight	KEYWORD2
+getLiquidHeight	KEYWORD2
+restoreFactory	KEYWORD2
+setUploadMode	KEYWORD2
+getUploadMode	KEYWORD2
+getSystemStatus	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+LD010_TIMEOUT_MS	LITERAL1
+LD010_STATUS_LEVEL_ALARM	LITERAL1
+LD010_STATUS_CAL_FAIL	LITERAL1
+LD010_STATUS_INIT_FAIL	LITERAL1
