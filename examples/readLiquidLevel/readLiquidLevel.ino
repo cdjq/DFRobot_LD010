@@ -18,7 +18,7 @@
  * UNO        RX 4                   TX 5          SoftwareSerial(4, 5)
  * MEGA2560   RX 15                  TX 14         Serial3
  * Leonardo   RX 0                   TX 1          Serial1
- * ESP32      RX D3                  TX D2         Serial1
+ * ESP32      RX 16                  TX 17         Serial1
  */
 
 #include "DFRobot_LD010.h"
@@ -30,7 +30,7 @@ DFRobot_LD010 sensor(&softSerial, 9600, 1);
 #elif defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_AVR_MEGA)
 DFRobot_LD010 sensor(&Serial3, 9600, 1);
 #elif defined(ESP32)
-DFRobot_LD010 sensor(&Serial1, 9600, 1, /*rx*/D3, /*tx*/D2);
+DFRobot_LD010 sensor(&Serial1, 9600, 1, /*rx*/16, /*tx*/17);
 #else
 DFRobot_LD010 sensor(&Serial1, 9600, 1);
 #endif

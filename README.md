@@ -210,7 +210,7 @@ There is no product photo in this package.
 | Arduino UNO | Untested | SoftwareSerial RX 4, TX 5 |
 | Arduino Mega 2560 | Untested | UART3, RX 15, TX 14 |
 | Arduino Leonardo | Untested | Serial1, RX 0, TX 1 |
-| FireBeetle-ESP32 | Untested | Serial1, RX D3, TX D2 |
+| ESP32 / FireBeetle-ESP32 | Untested | Serial1, RX GPIO16, TX GPIO17 |
 | Raspberry Pi 4B/5B | Not in this library | Arduino package only |
 
 ## History

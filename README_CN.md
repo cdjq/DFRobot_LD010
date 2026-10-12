@@ -210,7 +210,7 @@ SKU SEN0778
 | Arduino UNO | 未测试 | SoftwareSerial，RX 4，TX 5 |
 | Arduino Mega 2560 | 未测试 | UART3，RX 15，TX 14 |
 | Arduino Leonardo | 未测试 | Serial1，RX 0，TX 1 |
-| FireBeetle-ESP32 | 未测试 | Serial1，RX D3，TX D2 |
+| ESP32 / FireBeetle-ESP32 | 未测试 | Serial1，RX GPIO16，TX GPIO17 |
 | Raspberry Pi 4B/5B | 不在本库 | 本次只交付 Arduino 库 |
 
 ## 历史
