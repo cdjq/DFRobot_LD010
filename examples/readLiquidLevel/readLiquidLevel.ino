@@ -10,9 +10,9 @@
  */
 
 /**
- * 传感器经 DFR0845 接到开发板。传感器棕色 VCC 接 DC 9-28V，不要接开发板 5V。
- * 蓝色接 9-28V 电源负极，黑色 RS485-A 接模块 A，黄色 RS485-B 接模块 B。
- * 模块 UART 的 VCC/GND 接开发板。模块 TX 接 MCU RX，模块 RX 接 MCU TX。
+ * Connect the sensor through DFR0845. Sensor brown VCC uses DC 9-28V, not the board 5V pin.
+ * Blue goes to the 9-28V supply negative. Black RS485-A goes to module A. Yellow RS485-B goes to module B.
+ * Connect the module UART VCC and GND to the board. Module TX goes to MCU RX. Module RX goes to MCU TX.
  *
  * Board      MCU RX                 MCU TX
  * UNO        RX 4                   TX 5          SoftwareSerial(4, 5)

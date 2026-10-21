@@ -10,9 +10,9 @@
  */
 
 /**
- * 传感器经 DFR0845 接到开发板。传感器棕色 VCC 接 DC 9-28V，不要接开发板 5V。
- * 蓝色接 9-28V 电源负极，黑色 RS485-A 接模块 A，黄色 RS485-B 接模块 B。
- * 模块 UART 的 VCC/GND 接开发板。模块 TX 接 MCU RX，模块 RX 接 MCU TX。
+ * Connect the sensor through DFR0845. Sensor brown VCC uses DC 9-28V, not the board 5V pin.
+ * Blue goes to the 9-28V supply negative. Black RS485-A goes to module A. Yellow RS485-B goes to module B.
+ * Connect the module UART VCC and GND to the board. Module TX goes to MCU RX. Module RX goes to MCU TX.
  *
  * Board      MCU RX                 MCU TX
  * UNO        RX 4                   TX 5          SoftwareSerial(4, 5)
@@ -20,9 +20,9 @@
  * Leonardo   RX 0                   TX 1          Serial1
  * ESP32      RX 16                  TX 17         Serial1
  *
- * 标定会把当前测距写成空罐距离。罐里有液体时不要发送字符。
- * 打开串口监视器后，发送任意字符才执行一次标定。
- * 库只发出命令。示例在 5 秒内轮询状态，标定期间没有回显不算失败。
+ * Calibration stores the current distance as the empty-tank distance. Do not send a character while liquid is in the tank.
+ * Open the serial monitor and send any character to calibrate once.
+ * The library only sends the command. This example polls status for 5 seconds. A missing echo during calibration is not a failure.
  */
 
 #include "DFRobot_LD010.h"
@@ -52,7 +52,7 @@ void setup(void) {
   Serial.println("LD010 online");
   Serial.println("Tank must be empty. Send any character to calibrate once.");
 
-  // 已知空罐距离时可以不走自动标定，直接手动写入，范围 20-10000 mm。
+  // If the empty-tank distance is already known, write it directly instead of calibrating. Range is 20-10000 mm.
   // uint16_t heightMm = 0;
   // sensor.setInstallationHeight(1000);
   // sensor.getInstallationHeight(&heightMm);
