@@ -22,6 +22,7 @@
  *
  * 标定会把当前测距写成空罐距离。罐里有液体时不要发送字符。
  * 打开串口监视器后，发送任意字符才执行一次标定。
+ * 库只发出命令。示例在 5 秒内轮询状态，标定期间没有回显不算失败。
  */
 
 #include "DFRobot_LD010.h"
@@ -38,6 +39,8 @@ DFRobot_LD010 sensor(&Serial1, 9600, 1, /*rx*/16, /*tx*/17);
 DFRobot_LD010 sensor(&Serial1, 9600, 1);
 #endif
 
+static const uint32_t CALIBRATE_WINDOW_MS = 5000;
+static const uint16_t CALIBRATE_POLL_MS = 200;
 static bool calibrated = false;
 
 void setup(void) {
@@ -48,23 +51,42 @@ void setup(void) {
   }
   Serial.println("LD010 online");
   Serial.println("Tank must be empty. Send any character to calibrate once.");
+
+  // 已知空罐距离时可以不走自动标定，直接手动写入，范围 20-10000 mm。
+  // uint16_t heightMm = 0;
+  // sensor.setInstallationHeight(1000);
+  // sensor.getInstallationHeight(&heightMm);
 }
 
 void loop(void) {
   if (!calibrated && Serial.available()) {
     while (Serial.available()) Serial.read();
-    Serial.println(sensor.calibrateEmptyDistance() ? "calibrateEmptyDistance ok" : "calibrateEmptyDistance failed");
-    delay(500);
+    Serial.println(sensor.calibrateEmptyDistance() ? "command echoed" : "no echo yet");
+    Serial.println("polling status");
 
+    uint32_t start = millis();
     uint16_t status = 0;
-    uint16_t installation = 0;
-    if (sensor.getSystemStatus(&status)) {
-      Serial.print("status: 0x");
-      Serial.println(status, HEX);
-      Serial.println((status & LD010_STATUS_CAL_FAIL) ? "calibration bit: not success" : "calibration bit: success");
-    } else {
-      Serial.println("status failed");
+    bool sawNotDone = false;
+    bool success = false;
+    while ((uint32_t)(millis() - start) < CALIBRATE_WINDOW_MS) {
+      if (sensor.getSystemStatus(&status)) {
+        if ((status & LD010_STATUS_CAL_FAIL) != 0) {
+          sawNotDone = true;
+        } else if (sawNotDone) {
+          success = true;
+          break;
+        }
+      }
+      delay(CALIBRATE_POLL_MS);
     }
+    if (!success && sensor.getSystemStatus(&status)) {
+      success = (status & LD010_STATUS_CAL_FAIL) == 0;
+    }
+
+    uint16_t installation = 0;
+    Serial.print("status: 0x");
+    Serial.println(status, HEX);
+    Serial.println(success ? "calibration bit: success" : "calibration bit: not success");
     Serial.print("installation mm: ");
     if (sensor.getInstallationHeight(&installation)) Serial.println(installation);
     else Serial.println("failed");

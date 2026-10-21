@@ -132,10 +132,10 @@ SKU SEN0778
    * @fn calibrateEmptyDistance
    * @brief 按当前看到的距离开始标定空罐
    * @return 传感器回显写入 1 时返回 true
-   * @n 返回值只表示命令被接受。
-   * @n 之后读 getSystemStatus()。bit1 = 0 表示标定成功，bit1 = 1 表示未成功。
+   * @n 本函数不等待标定结束。这颗传感器大约需要 3-4 秒，手册没有写这个时间。
+   * @n 返回 false 可能只是传感器正忙，回显错过了普通超时。请在这段时间内轮询 getSystemStatus()。
+   * @n bit1 = 0 表示标定成功，bit1 = 1 表示未成功。
    * @n 罐里有液体时不要标定，当前距离会被记成空罐距离。
-   * @n 手册没有给出标定耗时。
    */
   bool calibrateEmptyDistance(void);
 

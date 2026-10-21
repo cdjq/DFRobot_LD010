@@ -187,10 +187,10 @@ public:
    * @fn calibrateEmptyDistance
    * @brief Start empty-tank calibration from the distance currently seen
    * @return true when the sensor echoes the write of 1
-   * @n The return value only means the command was accepted.
-   * @n Read getSystemStatus() afterwards. Bit1 = 0 means calibration succeeded, bit1 = 1 means it did not.
+   * @n This call does not wait for calibration to finish. On this sensor that takes about 3-4 s, and the time is not in the manual.
+   * @n A false return can mean the echo missed the normal timeout while the sensor is busy. Poll getSystemStatus() until that window has passed.
+   * @n Bit1 = 0 means calibration succeeded. Bit1 = 1 means it did not.
    * @n Do not calibrate while liquid is in the tank; the current distance becomes the empty-tank distance.
-   * @n The manual does not specify how long calibration takes.
    */
   bool calibrateEmptyDistance(void);
 
